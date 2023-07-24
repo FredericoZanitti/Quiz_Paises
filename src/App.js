@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
+import Quiz from "./components/Quiz";
+import { IoMdSettings } from "react-icons/io";
+import EscolherTipo from "./components/EscolherTipo";
+import EscolherRegiao from "./components/EscolherRegiao";
 
 function App() {
+  const [regiao, setRegiao] = useState("");
+  const [tipoNacoes, setTipoNacoes] = useState("");
+
+  useEffect(() => {
+    setRegiao("Todas");
+    setTipoNacoes("t");
+  }, []);
+
+  function handleReconhecidoChange(value) {
+    setTipoNacoes(value);
+  }
+
+  function handleRegiaoChange(value) {
+    setRegiao(value);
+  }
+
+  function clickSettings() {
+    const settingIcon = document.getElementById("setting-bar");
+    settingIcon.classList.toggle("hide-show-bar");
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <IoMdSettings className="settings" onClick={clickSettings} />
+      <div className="setting-position-bar">
+        <div className="hide-show-bar setting-bar" id="setting-bar">
+          <EscolherTipo onChangeReconhecidos={handleReconhecidoChange} />
+          <EscolherRegiao onChangeReconhecidos={handleRegiaoChange} />
+        </div>
+      </div>
+      <div className="titulo-quiz">QUIZ PAÍSES</div>
+      <hr />
+      <Quiz tipoNacoes={tipoNacoes} regiao={regiao} />
     </div>
   );
 }

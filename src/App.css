@@ -1,38 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap");
+
 .App {
   text-align: center;
+  font-family: "Roboto", sans-serif;
+  margin-top: 5vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-image: url("./assets/world.jpg");
+  background-position: top center;
+  background-size: auto;
+  background-repeat: none;
+  background-attachment: fixed;
+
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.titulo-quiz {
+  font-size: 2em;
+  font-weight: bold;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.settings {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  font-size: 2em;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.setting-position-bar {
+  display: flex;
+  position: fixed;
+  top: 3.2em;
+  right: 1em;
+  font-size: 2em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.setting-bar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, auto);
+  row-gap: 0.5em;
+  border-radius: 0.5em;
+  background-color: rgba(255, 255, 255, 0.5);
+  -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
+  box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
+  border: none;
+}
+
+.hide-show-bar {
+  display: none;
 }
