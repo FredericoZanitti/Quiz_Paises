@@ -5,6 +5,7 @@ import { BiSolidCheckCircle } from "react-icons/bi";
 import { TiWarning } from "react-icons/ti";
 
 export default function Quiz(tipoNacoes) {
+  const maxQuestoes = 20;
   const [dgData, setDgData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
   const [randomCountryName, setRandomCountryName] = useState("");
@@ -13,6 +14,10 @@ export default function Quiz(tipoNacoes) {
   const [proximo, setProximo] = useState(0);
   const [clicou, setClicou] = useState(false);
   const [mensagem, setMensagem] = useState("");
+  const [contagem, setContagem] = useState(1);
+  const [acertos, setAcertos] = useState(0);
+  const [erros, setErros] = useState(0);
+  const [pulos, setPulos] = useState(0);
 
   useEffect(() => {
     const dgFiltered = dgData
@@ -74,26 +79,30 @@ export default function Quiz(tipoNacoes) {
   }, [randomItem]);
 
   function compararNomeImpressoClicado(e) {
-    setClicou(true);
     const divResultado = document.getElementById("resultado-escolha");
 
-    if (randomCountryName === e.target.alt) {
-      divResultado.classList.remove("resultado-errado");
-      divResultado.classList.add("resultado-correto");
-      setResultado(
-        <span>
-          {<BiSolidCheckCircle className="icone" />} <br /> CORRETO!
-        </span>
-      );
-    } else {
-      divResultado.classList.remove("resultado-correto");
-      divResultado.classList.add("resultado-errado");
-      setResultado(
-        <span>
-          {<TiWarning className="icone" />} <br /> {`${e.target.alt}`}
-        </span>
-      );
+    if (!clicou) {
+      if (randomCountryName === e.target.alt) {
+        divResultado.classList.remove("resultado-errado");
+        divResultado.classList.add("resultado-correto");
+        setResultado(
+          <span>
+            {<BiSolidCheckCircle className="icone" />} <br /> CORRETO!
+          </span>
+        );
+        setAcertos(acertos + 1);
+      } else {
+        divResultado.classList.remove("resultado-correto");
+        divResultado.classList.add("resultado-errado");
+        setResultado(
+          <span>
+            {<TiWarning className="icone" />} <br /> {`${e.target.alt}`}
+          </span>
+        );
+        setErros(erros + 1);
+      }
     }
+    setClicou(true);
   }
 
   function proximoQuiz() {
@@ -102,6 +111,7 @@ export default function Quiz(tipoNacoes) {
       divResultado.classList.remove("resultado-correto");
       divResultado.classList.remove("resultado-errado");
       setResultado("");
+      setContagem(contagem + 1);
       setProximo(proximo + 1);
       setClicou(false);
     } else {
@@ -123,8 +133,9 @@ export default function Quiz(tipoNacoes) {
     <div>
       <BuscaPaises onChange={setDgData} />
 
+      <div className="questao-numero">{`Questão ${contagem} de ${maxQuestoes}`}</div>
       <div className="nome-pais-aleatorio">
-        {randomCountryName.toUpperCase()}
+        {`${randomCountryName.toUpperCase()}`}
       </div>
 
       <div className="bandeiras-quiz">
@@ -148,7 +159,16 @@ export default function Quiz(tipoNacoes) {
         <button className="next-button" onClick={proximoQuiz}>
           Próximo
         </button>
+        <button className="jump-button" onClick={proximoQuiz}>
+          Pular
+        </button>
+        <button className="stop-button" onClick={proximoQuiz}>
+          Finalizar
+        </button>
       </div>
+
+      <div className="erros-acertos">Acertos: {acertos}</div>
+      <div className="erros-acertos">Erros: {erros}</div>
     </div>
   );
 }

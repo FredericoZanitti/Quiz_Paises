@@ -57,7 +57,14 @@
   color: darkslategrey;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  padding: 1em;
+  padding: 0.6em;
+}
+
+.questao-numero {
+  font-size: 1em;
+  color: darkslategrey;
+  font-weight: bold;
+  margin-top: 1em;
 }
 
 #resultado-escolha {
@@ -135,7 +142,9 @@
 /* BOTÃO PRÓXIMO */
 
 /* Estilização básica do botão */
-.next-button {
+.next-button,
+.jump-button,
+.stop-button {
   display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
@@ -143,43 +152,74 @@
   text-align: center;
   text-decoration: none;
   color: #fff;
-  background-color: #3498db;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
+.next-button,
+.jump-button {
+  background-color: #3498db;
+}
+
+.stop-button {
+  background-color: #c93131;
+}
+
 /* Efeito de hover para o botão */
-.next-button:hover {
+.next-button:hover,
+.jump-button:hover {
   background-color: #2980b9;
 }
 
+.stop-button:hover {
+  background-color: #750c0c;
+}
+
 /* Efeito de foco para melhorar acessibilidade */
-.next-button:focus {
+.next-button:focus,
+.jump-button:focus,
+.stop-button:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilo para o botão quando estiver desabilitado */
-.next-button:disabled {
+.next-button:disabled,
+.jump-button:disabled,
+.stop-button:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
 }
 
 /* Ícone de seta direita no botão (você pode usar uma fonte de ícones ou uma imagem) */
 .next-button::after {
-  content: "\2192"; /* Código unicode para a seta direita */
+  content: "\25B6"; /* Código unicode para a seta direita */
+  margin-left: 10px;
+}
+
+.jump-button::after {
+  content: "\2BC5"; /* Código unicode para a seta direita */
+  margin-left: 10px;
+}
+
+.stop-button::after {
+  content: "\23F9"; /* Código unicode para a seta direita */
   margin-left: 10px;
 }
 
 /* Caso queira alterar a cor do ícone */
-.next-button::after {
+.next-button::after,
+.jump-button::after,
+.stop-button::after {
   color: #fff; /* Cor do ícone */
 }
 
 /* Caso queira alinhar o ícone de acordo com o texto */
-.next-button::after {
+.next-button::after,
+.jump-button::after,
+.stop-button::after {
   vertical-align: middle;
 }
 
