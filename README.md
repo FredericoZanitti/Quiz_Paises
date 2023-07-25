@@ -5,5 +5,5 @@ Há a possibilidade de escolher as configurações para que as banderias sejam a
 
 ## API Utilizada
 
-(https://restcountries.com)
+https://restcountries.com
 
