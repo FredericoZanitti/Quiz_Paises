@@ -38,7 +38,9 @@ function App() {
       </div>
       <div className="titulo-quiz">QUIZ PAÍSES</div>
       <hr />
-      <Quiz tipoNacoes={tipoNacoes} regiao={regiao} />
+      <div className="tela-quiz">
+        <Quiz tipoNacoes={tipoNacoes} regiao={regiao} />
+      </div>
     </div>
   );
 }

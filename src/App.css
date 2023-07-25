@@ -49,8 +49,31 @@ body {
   -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
   box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
   border: none;
+  padding: 0.8em;
+  padding-right: 0;
 }
 
 .hide-show-bar {
   display: none;
+}
+
+/* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
+@media screen and (max-width: 768px) {
+  .setting-bar {
+    row-gap: 0.2em;
+    padding: 0.5em;
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  .setting-position-bar {
+    font-size: 1.5em;
+  }
+  .titulo-quiz {
+    font-size: 1.4em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .setting-bar {
+    padding: 0.2em;
+  }
 }

@@ -1,6 +1,8 @@
 import BuscaPaises from "./BuscaPaises";
 import { useState, useEffect } from "react";
 import "./Quiz.css";
+import { BiSolidCheckCircle } from "react-icons/bi";
+import { TiWarning } from "react-icons/ti";
 
 export default function Quiz(tipoNacoes) {
   const [dgData, setDgData] = useState([]);
@@ -75,12 +77,19 @@ export default function Quiz(tipoNacoes) {
     if (randomCountryName === e.target.alt) {
       divResultado.classList.remove("resultado-errado");
       divResultado.classList.add("resultado-correto");
-
-      setResultado("CORRETO!");
+      setResultado(
+        <span>
+          {<BiSolidCheckCircle className="icone" />} <br /> CORRETO!
+        </span>
+      );
     } else {
       divResultado.classList.remove("resultado-correto");
       divResultado.classList.add("resultado-errado");
-      setResultado(`ERRADO > ${e.target.alt}`);
+      setResultado(
+        <span>
+          {<TiWarning className="icone" />} <br /> {`${e.target.alt}`}
+        </span>
+      );
     }
   }
 
@@ -115,7 +124,9 @@ export default function Quiz(tipoNacoes) {
       </div>
       <div id="resultado-escolha">{resultado}</div>
       <div className="botao-proximo">
-        <button onClick={proximoQuiz}>Próximo</button>
+        <button className="next-button" onClick={proximoQuiz}>
+          Próximo
+        </button>
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
+/* fundo do quadro onde se encontram as bandeiras */
 .bandeiras-quiz {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   row-gap: 2em;
   column-gap: 2em;
-  width: 40%;
+  width: 70%; /* Usando 100% para ocupar a largura total do elemento pai */
+  max-width: 450px; /* Defina um valor máximo para evitar que a div fique muito larga em telas grandes */
   margin: auto;
   margin-bottom: 2em;
   padding: 2em;
@@ -13,6 +15,26 @@
   -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
   box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
   border: none;
+}
+
+/* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
+@media screen and (max-width: 768px) {
+  .bandeiras-quiz {
+    grid-template-columns: repeat(
+      1,
+      1fr
+    ); /* Altere para uma única coluna em telas menores */
+    row-gap: 0.5em;
+  }
+  #resultado-escolha {
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .bandeiras-quiz {
+    padding: 1em; /* Reduza o preenchimento em telas ainda menores */
+  }
 }
 
 .bandeira {
@@ -24,8 +46,9 @@
 }
 
 .bandeira img {
-  max-height: 13em; /* Defina o tamanho desejado */
-  object-fit: fill; /* Isso garantirá que a imagem preencha todo o espaço do contêiner sem distorção */
+  max-height: 7em; /* Defina o tamanho desejado */
+  max-width: 10em;
+  object-fit: fill;
   cursor: pointer;
 }
 
@@ -38,12 +61,17 @@
 }
 
 #resultado-escolha {
-  width: 30%;
+  width: auto;
+  min-width: 25vw;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   margin: auto;
+  margin-bottom: 0.5em;
+  -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  border: none;
 }
 
 .resultado-correto,
@@ -56,6 +84,14 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  position: fixed;
+  top: 50%; /* Posiciona o elemento a 50% da altura da tela */
+  left: 50%; /* Posiciona o elemento a 50% da largura da tela */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Move o elemento para o centro exato da tela */
+  z-index: 9999; /* Certifica-se de que o elemento fique acima de todos os outros elementos */
 }
 
 .resultado-correto {
@@ -65,3 +101,70 @@
 .resultado-errado {
   background-color: red;
 }
+
+/* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
+@media screen and (max-width: 768px) {
+  .nome-pais-aleatorio {
+    font-size: 1.4em;
+  }
+  .botao-proximo {
+    margin-bottom: 12em;
+  }
+}
+
+.icone {
+  font-size: 1.4em;
+}
+
+/* BOTÃO PRÓXIMO */
+
+/* Estilização básica do botão */
+.next-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #3498db;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Efeito de hover para o botão */
+.next-button:hover {
+  background-color: #2980b9;
+}
+
+/* Efeito de foco para melhorar acessibilidade */
+.next-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para o botão quando estiver desabilitado */
+.next-button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Ícone de seta direita no botão (você pode usar uma fonte de ícones ou uma imagem) */
+.next-button::after {
+  content: "\2192"; /* Código unicode para a seta direita */
+  margin-left: 10px;
+}
+
+/* Caso queira alterar a cor do ícone */
+.next-button::after {
+  color: #fff; /* Cor do ícone */
+}
+
+/* Caso queira alinhar o ícone de acordo com o texto */
+.next-button::after {
+  vertical-align: middle;
+}
+
+/* Estilização adicional ou variações de cores podem ser adicionadas conforme necessário */
