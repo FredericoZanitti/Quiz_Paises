@@ -11,6 +11,8 @@ export default function Quiz(tipoNacoes) {
   const [resultado, setResultado] = useState("");
   const [dgDataFiltered, setDgDataFiltered] = useState([]);
   const [proximo, setProximo] = useState(0);
+  const [clicou, setClicou] = useState(false);
+  const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
     const dgFiltered = dgData
@@ -72,6 +74,7 @@ export default function Quiz(tipoNacoes) {
   }, [randomItem]);
 
   function compararNomeImpressoClicado(e) {
+    setClicou(true);
     const divResultado = document.getElementById("resultado-escolha");
 
     if (randomCountryName === e.target.alt) {
@@ -94,11 +97,26 @@ export default function Quiz(tipoNacoes) {
   }
 
   function proximoQuiz() {
-    const divResultado = document.getElementById("resultado-escolha");
-    divResultado.classList.remove("resultado-correto");
-    divResultado.classList.remove("resultado-errado");
-    setResultado("");
-    setProximo(proximo + 1);
+    if (clicou) {
+      const divResultado = document.getElementById("resultado-escolha");
+      divResultado.classList.remove("resultado-correto");
+      divResultado.classList.remove("resultado-errado");
+      setResultado("");
+      setProximo(proximo + 1);
+      setClicou(false);
+    } else {
+      const msg = document.getElementById("mensagem-alerta");
+      msg.classList.remove("hide-class");
+      setMensagem(
+        <span>
+          {<TiWarning className="icone" />} <br /> Por favor, é preciso escolher
+          uma opção!
+        </span>
+      );
+      setTimeout(() => {
+        msg.classList.add("hide-class");
+      }, 2000);
+    }
   }
 
   return (
@@ -123,6 +141,9 @@ export default function Quiz(tipoNacoes) {
           ))}
       </div>
       <div id="resultado-escolha">{resultado}</div>
+      <div className="mensagem-alerta hide-class" id="mensagem-alerta">
+        {mensagem}
+      </div>
       <div className="botao-proximo">
         <button className="next-button" onClick={proximoQuiz}>
           Próximo

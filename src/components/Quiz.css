@@ -75,7 +75,9 @@
 }
 
 .resultado-correto,
-.resultado-errado {
+.resultado-errado,
+.mensagem-alerta {
+  font-family: "Roboto", sans-serif;
   color: white;
   font-size: 2em;
   padding: 0.5em;
@@ -100,6 +102,20 @@
 
 .resultado-errado {
   background-color: red;
+}
+
+.mensagem-alerta {
+  padding: 1em;
+
+  background-color: rgb(255, 225, 0);
+  color: rgb(255, 255, 255);
+  -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  border: none;
+}
+
+.hide-class {
+  display: none;
 }
 
 /* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
