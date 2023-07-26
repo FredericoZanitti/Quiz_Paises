@@ -5,7 +5,7 @@ import { BiSolidCheckCircle } from "react-icons/bi";
 import { TiWarning } from "react-icons/ti";
 
 export default function Quiz(tipoNacoes) {
-  const maxQuestoes = 20;
+  const maxQuestoes = 3;
   const [dgData, setDgData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
   const [randomCountryName, setRandomCountryName] = useState("");
@@ -18,6 +18,21 @@ export default function Quiz(tipoNacoes) {
   const [acertos, setAcertos] = useState(0);
   const [erros, setErros] = useState(0);
   const [pulos, setPulos] = useState(0);
+  const [desabJump, setDesabJump] = useState(false);
+  const [desabNext, setDesabNext] = useState(false);
+
+  useEffect(() => {
+    if (pulos === 3) {
+      setDesabJump(true);
+      setPulos(3);
+    }
+  }, [pulos]);
+
+  useEffect(() => {
+    if (proximo === maxQuestoes - 1) {
+      setDesabNext(true);
+    }
+  }, [proximo]);
 
   useEffect(() => {
     const dgFiltered = dgData
@@ -69,7 +84,7 @@ export default function Quiz(tipoNacoes) {
 
       setRandomItem(randomItems);
     }
-  }, [dgDataFiltered, proximo]);
+  }, [dgDataFiltered, proximo, pulos]);
 
   useEffect(() => {
     if (randomItem && randomItem.length > 0) {
@@ -90,6 +105,7 @@ export default function Quiz(tipoNacoes) {
             {<BiSolidCheckCircle className="icone" />} <br /> CORRETO!
           </span>
         );
+
         setAcertos(acertos + 1);
       } else {
         divResultado.classList.remove("resultado-correto");
@@ -129,6 +145,39 @@ export default function Quiz(tipoNacoes) {
     }
   }
 
+  function pularQuiz() {
+    if (pulos === 2) {
+      const msg = document.getElementById("mensagem-alerta");
+      msg.classList.remove("hide-class");
+      setMensagem(
+        <span>
+          {<TiWarning className="icone" />} <br /> A partir de agora não é mais
+          possível pular! Boa sorte!
+        </span>
+      );
+      setTimeout(() => {
+        msg.classList.add("hide-class");
+      }, 3000);
+    }
+
+    if (pulos < 3) {
+      setPulos(pulos + 1);
+      setClicou(false);
+    }
+  }
+
+  function endGameQuiz() {
+    setProximo(0);
+    setClicou(false);
+    setMensagem("");
+    setContagem(1);
+    setAcertos(0);
+    setErros(0);
+    setPulos(0);
+    setDesabJump(false);
+    setDesabNext(false);
+  }
+
   return (
     <div>
       <BuscaPaises onChange={setDgData} />
@@ -156,19 +205,28 @@ export default function Quiz(tipoNacoes) {
         {mensagem}
       </div>
       <div className="botao-proximo">
-        <button className="next-button" onClick={proximoQuiz}>
+        <button
+          className="next-button"
+          disabled={desabNext}
+          onClick={proximoQuiz}
+        >
           Próximo
         </button>
-        <button className="jump-button" onClick={proximoQuiz}>
+        <button
+          className="jump-button"
+          disabled={desabJump}
+          onClick={pularQuiz}
+        >
           Pular
         </button>
-        <button className="stop-button" onClick={proximoQuiz}>
+        <button className="stop-button" onClick={endGameQuiz}>
           Finalizar
         </button>
       </div>
 
       <div className="erros-acertos">Acertos: {acertos}</div>
       <div className="erros-acertos">Erros: {erros}</div>
+      <div className="erros-acertos">Pulos: {pulos}</div>
     </div>
   );
 }

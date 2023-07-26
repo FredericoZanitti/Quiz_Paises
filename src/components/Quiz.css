@@ -163,6 +163,11 @@
   background-color: #3498db;
 }
 
+/* espaçamento entre os botões, escolher o do meio pois basta colocar margens dir e esq */
+.jump-button {
+  margin: 0 1em;
+}
+
 .stop-button {
   background-color: #c93131;
 }
@@ -205,7 +210,7 @@
 }
 
 .stop-button::after {
-  content: "\23F9"; /* Código unicode para a seta direita */
+  content: "\2BC0"; /* Código unicode para a seta direita */
   margin-left: 10px;
 }
 
