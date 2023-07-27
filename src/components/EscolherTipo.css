@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500;900&display=swap");
+
 .input-radio {
   position: absolute;
   opacity: 0;
@@ -52,4 +54,30 @@ input[type="radio"]:checked + label .radio-btn {
 
 label span {
   padding-left: 0.5em;
+}
+
+.quantidade-rodadas-label {
+  font-weight: normal;
+  font-size: 0.7em;
+  display: block;
+  margin-top: 0.6em;
+  margin-bottom: 0.4em;
+  color: lightslategrey;
+}
+
+.quantidade-rodadas-input {
+  width: 3em;
+  font-size: 1em;
+  font-family: "Roboto", sans-serif;
+  padding: 0.5em;
+  top: 0;
+  text-align: left;
+  color: #282c34;
+  margin-bottom: 0.7em;
+}
+
+.escolher-qtde-rodadas {
+  display: block;
+  text-align: left;
+  margin-left: 0.6em;
 }

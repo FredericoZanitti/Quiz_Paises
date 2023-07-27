@@ -8,7 +8,7 @@ import { FaFaceSurprise } from "react-icons/fa6";
 import { MdCancel, MdCheckCircle, MdRedo } from "react-icons/md";
 
 export default function Quiz(tipoNacoes) {
-  const maxQuestoes = 3;
+  const [maxQuestoes, setmaxQuestoes] = useState(20);
   const [dgData, setDgData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
   const [randomCountryName, setRandomCountryName] = useState("");
@@ -52,6 +52,7 @@ export default function Quiz(tipoNacoes) {
       });
 
     setDgDataFiltered(dgFiltered);
+    setmaxQuestoes(tipoNacoes.qtdeRodadas);
   }, [dgData, tipoNacoes]);
 
   useEffect(() => {
@@ -86,10 +87,10 @@ export default function Quiz(tipoNacoes) {
   useEffect(() => {
     const msg = document.getElementById("mensagem-alerta");
 
-    if (contagem < maxQuestoes && (erros > 0 || acertos > 0))
+    if (contagem < Number.parseInt(maxQuestoes) && (erros > 0 || acertos > 0))
       setContagem(contagem + 1);
 
-    if (erros + acertos === maxQuestoes) {
+    if (erros + acertos === Number.parseInt(maxQuestoes)) {
       setTimeout(() => {
         msg.classList.add("hide-class");
       }, 10000);
@@ -104,10 +105,18 @@ export default function Quiz(tipoNacoes) {
   }, [erros, acertos]);
 
   useEffect(() => {
+    const msg = document.getElementById("mensagem-alerta");
     if (pulos === 3) {
       setDesabJump(true);
     }
+    setTimeout(() => {
+      msg.classList.add("hide-class");
+    }, 2000);
   }, [pulos]);
+
+  useEffect(() => {
+    resetGameQuiz();
+  }, [maxQuestoes]);
 
   /* RESETAR QUIZ */
 
@@ -119,6 +128,9 @@ export default function Quiz(tipoNacoes) {
     setErros(0);
     setPulos(0);
     setDesabJump(false);
+
+    const msg = document.getElementById("mensagem-alerta");
+    msg.classList.add("hide-class");
   }
 
   /* PULAR QUIZ */
@@ -174,13 +186,14 @@ export default function Quiz(tipoNacoes) {
         setErros(erros + 1);
       }
     }
-    if (contagem === maxQuestoes) setDesabJump(true);
+    if (contagem === Number.parseInt(maxQuestoes)) setDesabJump(true);
   }
 
   /* RESULTADO FINAL ==================================================================================================================================== */
 
   function resultadoFinal() {
-    const percentual = ((acertos - pulos * 0.5) / maxQuestoes) * 100;
+    const percentual =
+      ((acertos - pulos * 0.2) / Number.parseInt(maxQuestoes)) * 100;
     let msgResutaldo = "";
 
     /*

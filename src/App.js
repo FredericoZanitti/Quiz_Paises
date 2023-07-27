@@ -4,10 +4,12 @@ import Quiz from "./components/Quiz";
 import { IoMdSettings } from "react-icons/io";
 import EscolherTipo from "./components/EscolherTipo";
 import EscolherRegiao from "./components/EscolherRegiao";
+import EscolherQtdeRodadas from "./components/EscolherQtdeRodadas";
 
 function App() {
   const [regiao, setRegiao] = useState("");
   const [tipoNacoes, setTipoNacoes] = useState("");
+  const [qtde, setQtde] = useState(20);
 
   useEffect(() => {
     setRegiao("Todas");
@@ -20,6 +22,10 @@ function App() {
 
   function handleRegiaoChange(value) {
     setRegiao(value);
+  }
+
+  function handleQtdeRodadas(value) {
+    setQtde(value);
   }
 
   function clickSettings() {
@@ -36,13 +42,14 @@ function App() {
         <div className="hide-show-bar setting-bar" id="setting-bar">
           <EscolherTipo onChangeReconhecidos={handleReconhecidoChange} />
           <EscolherRegiao onChangeReconhecidos={handleRegiaoChange} />
+          <EscolherQtdeRodadas onChangeQuantidade={handleQtdeRodadas} />
         </div>
       </div>
       <div className="hide-show-bar cobre-tela" id="cobre-tela"></div>
       <div className="titulo-quiz">QUIZ PAÍSES</div>
       <hr />
       <div className="tela-quiz">
-        <Quiz tipoNacoes={tipoNacoes} regiao={regiao} />
+        <Quiz tipoNacoes={tipoNacoes} regiao={regiao} qtdeRodadas={qtde} />
       </div>
     </div>
   );
