@@ -11,24 +11,10 @@
   margin-bottom: 2em;
   padding: 2em;
   border-radius: 1em;
-  background-color: rgba(231, 218, 218, 0.377);
-  -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
-  box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.54);
+  background-color: rgba(245, 245, 245, 0.63);
+  -webkit-box-shadow: 0 0 10px rgba(62, 62, 62, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  box-shadow: 0 0 10px rgba(62, 62, 62, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
   border: none;
-}
-
-/* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
-@media screen and (max-width: 768px) {
-  .bandeiras-quiz {
-    grid-template-columns: repeat(
-      1,
-      1fr
-    ); /* Altere para uma única coluna em telas menores */
-    row-gap: 0.5em;
-  }
-  #resultado-escolha {
-    font-size: 1.3em;
-  }
 }
 
 @media screen and (max-width: 480px) {
@@ -53,11 +39,11 @@
 }
 
 .nome-pais-aleatorio {
-  font-size: 2em;
+  font-size: 1.7em;
   color: darkslategrey;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
-  padding: 0.6em;
+  padding: 1.5em 0;
 }
 
 .questao-numero {
@@ -83,16 +69,18 @@
 
 .mensagem-alerta {
   font-family: "Roboto", sans-serif;
-  color: white;
   font-size: 2em;
-  padding: 0.5em;
-  border-radius: 0.5em;
+  color: rgb(255, 255, 255);
+  padding: 1em;
+  min-width: 15em;
+
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+
   position: fixed;
-  top: 50%; /* Posiciona o elemento a 50% da altura da tela */
+  top: 40%; /* Posiciona o elemento a 50% da altura da tela */
   left: 50%; /* Posiciona o elemento a 50% da largura da tela */
   transform: translate(
     -50%,
@@ -100,9 +88,7 @@
   ); /* Move o elemento para o centro exato da tela */
   z-index: 9999; /* Certifica-se de que o elemento fique acima de todos os outros elementos */
 
-  padding: 1em;
-
-  color: rgb(255, 255, 255);
+  border-radius: 0.5em;
   -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
   border: none;
@@ -126,16 +112,6 @@
 
 .hide-class {
   display: none;
-}
-
-/* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
-@media screen and (max-width: 768px) {
-  .nome-pais-aleatorio {
-    font-size: 1.4em;
-  }
-  .botoes {
-    margin-bottom: 12em;
-  }
 }
 
 .icone {
@@ -216,13 +192,18 @@
 
 /* Estilização adicional ou variações de cores podem ser adicionadas conforme necessário */
 
+.painel-pontuacao-geral {
+  width: 9em;
+  position: fixed;
+  top: 8em;
+  left: 2em;
+  padding: 0.5em;
+}
+
 .painel-pontuacao {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  position: fixed;
-  top: 4em;
-  left: 1em;
   font-size: 2em;
   color: rgb(62, 62, 62);
   padding: 0.5em;
@@ -250,4 +231,41 @@
 
 .icone-pulou {
   color: #3498db;
+}
+
+/* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
+@media screen and (max-width: 1040px) {
+  .botoes {
+    margin-bottom: 3em;
+  }
+
+  .painel-pontuacao-geral {
+    display: block;
+    position: static;
+    margin: auto;
+    margin-bottom: 8em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nome-pais-aleatorio {
+    font-size: 1.4em;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .bandeiras-quiz {
+    grid-template-columns: repeat(
+      1,
+      1fr
+    ); /* Altere para uma única coluna em telas menores */
+    row-gap: 0.5em;
+  }
+  #resultado-escolha {
+    font-size: 1.3em;
+  }
+
+  .mensagem-alerta {
+    top: 60%; /* Posiciona o elemento a 50% da altura da tela */
+  }
 }

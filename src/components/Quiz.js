@@ -2,7 +2,9 @@ import BuscaPaises from "./BuscaPaises";
 import { useState, useEffect } from "react";
 import "./Quiz.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
-import { TiWarning } from "react-icons/ti";
+import { TiWarning, TiThumbsUp } from "react-icons/ti";
+import { GiTrophy } from "react-icons/gi";
+import { FaFaceSurprise } from "react-icons/fa6";
 import { MdCancel, MdCheckCircle, MdRedo } from "react-icons/md";
 
 export default function Quiz(tipoNacoes) {
@@ -10,7 +12,6 @@ export default function Quiz(tipoNacoes) {
   const [dgData, setDgData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
   const [randomCountryName, setRandomCountryName] = useState("");
-  const [resultado, setResultado] = useState("");
   const [dgDataFiltered, setDgDataFiltered] = useState([]);
   const [endGame, setEndGame] = useState(false);
   const [mensagem, setMensagem] = useState("");
@@ -83,12 +84,22 @@ export default function Quiz(tipoNacoes) {
   /* AÇÕES DIVERSAS ====================================================================================================================================== */
 
   useEffect(() => {
+    const msg = document.getElementById("mensagem-alerta");
+
     if (contagem < maxQuestoes && (erros > 0 || acertos > 0))
       setContagem(contagem + 1);
 
     if (erros + acertos === maxQuestoes) {
+      setTimeout(() => {
+        msg.classList.add("hide-class");
+      }, 10000);
+
       setEndGame(true);
       resultadoFinal();
+    } else {
+      setTimeout(() => {
+        msg.classList.add("hide-class");
+      }, 2000);
     }
   }, [erros, acertos]);
 
@@ -127,9 +138,6 @@ export default function Quiz(tipoNacoes) {
           possível pular! Boa sorte!
         </span>
       );
-      setTimeout(() => {
-        msg.classList.add("hide-class");
-      }, 3000);
     }
 
     if (pulos < 3) {
@@ -140,13 +148,14 @@ export default function Quiz(tipoNacoes) {
   /* AÇÃO AO CLICAR NA BANDERIA ========================================================================================================================== */
 
   function compararNomeImpressoClicado(e) {
+    const msg = document.getElementById("mensagem-alerta");
+    msg.classList.remove("hide-class");
+    msg.classList.remove("resultado-errado");
+    msg.classList.remove("alerta-de-mensagem");
+    msg.classList.remove("mensagem-resultado");
+
     if (!endGame) {
       if (randomCountryName === e.target.alt) {
-        const msg = document.getElementById("mensagem-alerta");
-        msg.classList.remove("hide-class");
-        msg.classList.remove("resultado-errado");
-        msg.classList.remove("alerta-de-mensagem");
-        msg.classList.remove("mensagem-resultado");
         msg.classList.add("resultado-correto");
         setMensagem(
           <span>
@@ -154,31 +163,17 @@ export default function Quiz(tipoNacoes) {
           </span>
         );
 
-        setTimeout(() => {
-          msg.classList.add("hide-class");
-        }, 2000);
-
         setAcertos(acertos + 1);
       } else {
-        const msg = document.getElementById("mensagem-alerta");
-        msg.classList.remove("hide-class");
-        msg.classList.remove("resultado-correto");
-        msg.classList.remove("alerta-de-mensagem");
-        msg.classList.remove("mensagem-resultado");
         msg.classList.add("resultado-errado");
         setMensagem(
           <span>
             {<TiWarning className="icone" />} <br /> {`${e.target.alt}`}
           </span>
         );
-        setTimeout(() => {
-          msg.classList.add("hide-class");
-        }, 2000);
-
         setErros(erros + 1);
       }
     }
-
     if (contagem === maxQuestoes) setDesabJump(true);
   }
 
@@ -200,6 +195,7 @@ export default function Quiz(tipoNacoes) {
     if (percentual < 20) {
       msgResutaldo = (
         <span>
+          <TiWarning className="icone" /> <br />
           Aproveitamento: {percentual.toFixed(1)}% <br />
           Precisa aprender um pouco mais sobre bandeiras!
         </span>
@@ -207,6 +203,7 @@ export default function Quiz(tipoNacoes) {
     } else if (percentual > 20 && percentual <= 40) {
       msgResutaldo = (
         <span>
+          <TiWarning className="icone" /> <br />
           Aproveitamento: {percentual.toFixed(1)}% <br />
           Pode melhorar!
         </span>
@@ -214,6 +211,7 @@ export default function Quiz(tipoNacoes) {
     } else if (percentual > 40 && percentual <= 60) {
       msgResutaldo = (
         <span>
+          <TiThumbsUp className="icone" /> <br />
           Aproveitamento: {percentual.toFixed(1)}% <br />
           Você conhece umpouco sobre bandeiras, hein?
         </span>
@@ -221,6 +219,7 @@ export default function Quiz(tipoNacoes) {
     } else if (percentual > 60 && percentual <= 80) {
       msgResutaldo = (
         <span>
+          <TiThumbsUp className="icone" /> <br />
           Aproveitamento: {percentual.toFixed(1)}% <br />
           Uau! Realmente, impressionante!
         </span>
@@ -228,6 +227,7 @@ export default function Quiz(tipoNacoes) {
     } else if (percentual > 80 && percentual <= 90) {
       msgResutaldo = (
         <span>
+          <FaFaceSurprise className="icone" /> <br />
           Aproveitamento: {percentual.toFixed(1)}% <br />
           Quase temos um vexilólogo aqui!
         </span>
@@ -235,6 +235,7 @@ export default function Quiz(tipoNacoes) {
     } else {
       msgResutaldo = (
         <span>
+          <GiTrophy className="icone" /> <br />
           Aproveitamento: {percentual.toFixed(0)}% <br />
           Parabéns! Temos um Atlas ambulante aqui!
         </span>
@@ -248,14 +249,7 @@ export default function Quiz(tipoNacoes) {
     msg.classList.add("mensagem-resultado");
     msg.classList.remove("hide-class");
 
-    setMensagem(
-      <span>
-        {<TiWarning className="icone" />} <br /> {msgResutaldo}
-      </span>
-    );
-    setTimeout(() => {
-      msg.classList.add("hide-class");
-    }, 10000);
+    setMensagem(<span>{msgResutaldo}</span>);
   }
 
   return (
@@ -263,6 +257,7 @@ export default function Quiz(tipoNacoes) {
       <BuscaPaises onChange={setDgData} />
 
       <div className="questao-numero">{`Questão ${contagem} de ${maxQuestoes}`}</div>
+
       <div className="nome-pais-aleatorio">
         {`${randomCountryName.toUpperCase()}`}
       </div>
@@ -296,20 +291,22 @@ export default function Quiz(tipoNacoes) {
         </button>
       </div>
 
-      <div className="painel-pontuacao">
-        <div className="pontuacao">Pontuação</div>
-        <div className="icone-acertou">
-          <MdCheckCircle />
+      <div className="painel-pontuacao-geral">
+        <div className="painel-pontuacao">
+          <div className="pontuacao">Pontuação</div>
+          <div className="icone-acertou">
+            <MdCheckCircle />
+          </div>
+          <div>{acertos}</div>
+          <div className="icone-errou">
+            <MdCancel />
+          </div>
+          <div>{erros}</div>
+          <div className="icone-pulou">
+            <MdRedo />
+          </div>
+          <div>{pulos}</div>
         </div>
-        <div>{acertos}</div>
-        <div className="icone-errou">
-          <MdCancel />
-        </div>
-        <div>{erros}</div>
-        <div className="icone-pulou">
-          <MdRedo />
-        </div>
-        <div>{pulos}</div>
       </div>
     </div>
   );

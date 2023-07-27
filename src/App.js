@@ -25,6 +25,8 @@ function App() {
   function clickSettings() {
     const settingIcon = document.getElementById("setting-bar");
     settingIcon.classList.toggle("hide-show-bar");
+    const cobrirTela = document.getElementById("cobre-tela");
+    cobrirTela.classList.toggle("hide-show-bar");
   }
 
   return (
@@ -36,6 +38,7 @@ function App() {
           <EscolherRegiao onChangeReconhecidos={handleRegiaoChange} />
         </div>
       </div>
+      <div className="hide-show-bar cobre-tela" id="cobre-tela"></div>
       <div className="titulo-quiz">QUIZ PAÍSES</div>
       <hr />
       <div className="tela-quiz">
