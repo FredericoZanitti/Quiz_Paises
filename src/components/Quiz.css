@@ -81,8 +81,6 @@
   border: none;
 }
 
-.resultado-correto,
-.resultado-errado,
 .mensagem-alerta {
   font-family: "Roboto", sans-serif;
   color: white;
@@ -101,6 +99,13 @@
     -50%
   ); /* Move o elemento para o centro exato da tela */
   z-index: 9999; /* Certifica-se de que o elemento fique acima de todos os outros elementos */
+
+  padding: 1em;
+
+  color: rgb(255, 255, 255);
+  -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  border: none;
 }
 
 .resultado-correto {
@@ -111,14 +116,12 @@
   background-color: red;
 }
 
-.mensagem-alerta {
-  padding: 1em;
-
+.alerta-de-mensagem {
   background-color: rgb(255, 225, 0);
-  color: rgb(255, 255, 255);
-  -webkit-box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
-  border: none;
+}
+
+.mensagem-resultado {
+  background-color: #3498db;
 }
 
 .hide-class {
@@ -130,7 +133,7 @@
   .nome-pais-aleatorio {
     font-size: 1.4em;
   }
-  .botao-proximo {
+  .botoes {
     margin-bottom: 12em;
   }
 }
@@ -139,12 +142,11 @@
   font-size: 1.4em;
 }
 
-/* BOTÃO PRÓXIMO */
+/* BOTÕES */
 
 /* Estilização básica do botão */
-.next-button,
 .jump-button,
-.stop-button {
+.reset-button {
   display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
@@ -158,74 +160,94 @@
   transition: background-color 0.3s ease;
 }
 
-.next-button,
 .jump-button {
   background-color: #3498db;
-}
-
-/* espaçamento entre os botões, escolher o do meio pois basta colocar margens dir e esq */
-.jump-button {
   margin: 0 1em;
 }
 
-.stop-button {
-  background-color: #c93131;
+.reset-button {
+  background-color: seagreen;
 }
 
 /* Efeito de hover para o botão */
-.next-button:hover,
 .jump-button:hover {
   background-color: #2980b9;
 }
 
-.stop-button:hover {
-  background-color: #750c0c;
+.reset-button:hover {
+  background-color: #174b27;
 }
 
 /* Efeito de foco para melhorar acessibilidade */
-.next-button:focus,
 .jump-button:focus,
-.stop-button:focus {
+.reset-button:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Estilo para o botão quando estiver desabilitado */
-.next-button:disabled,
 .jump-button:disabled,
-.stop-button:disabled {
+.reset-button:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
 }
 
-/* Ícone de seta direita no botão (você pode usar uma fonte de ícones ou uma imagem) */
-.next-button::after {
-  content: "\25B6"; /* Código unicode para a seta direita */
-  margin-left: 10px;
-}
-
 .jump-button::after {
-  content: "\2BC5"; /* Código unicode para a seta direita */
+  content: "\2BC5"; /* Código unicode para a seta para cima */
   margin-left: 10px;
 }
 
-.stop-button::after {
-  content: "\2BC0"; /* Código unicode para a seta direita */
+.reset-button::after {
+  content: "\2BC0"; /* Código unicode para parar */
   margin-left: 10px;
 }
 
 /* Caso queira alterar a cor do ícone */
-.next-button::after,
 .jump-button::after,
-.stop-button::after {
+.reset-button::after {
   color: #fff; /* Cor do ícone */
 }
 
 /* Caso queira alinhar o ícone de acordo com o texto */
-.next-button::after,
 .jump-button::after,
-.stop-button::after {
+.reset-button::after {
   vertical-align: middle;
 }
 
 /* Estilização adicional ou variações de cores podem ser adicionadas conforme necessário */
+
+.painel-pontuacao {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  position: fixed;
+  top: 4em;
+  left: 1em;
+  font-size: 2em;
+  color: rgb(62, 62, 62);
+  padding: 0.5em;
+
+  border: none;
+  border-radius: 0.5em;
+  background-color: whitesmoke;
+  -webkit-box-shadow: 0 0 10px rgba(62, 62, 62, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+  box-shadow: 0 0 10px rgba(62, 62, 62, 0.9); /* Aumente o valor dos pixels para tornar a sombra mais densa */
+}
+
+.pontuacao {
+  grid-column: 1 / span 2;
+  padding-bottom: 0.5em;
+  font-size: 0.6em;
+}
+
+.icone-acertou {
+  color: green;
+}
+
+.icone-errou {
+  color: #c93131;
+}
+
+.icone-pulou {
+  color: #3498db;
+}

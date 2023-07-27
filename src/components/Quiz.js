@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./Quiz.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
 import { TiWarning } from "react-icons/ti";
+import { MdCancel, MdCheckCircle, MdRedo } from "react-icons/md";
 
 export default function Quiz(tipoNacoes) {
   const maxQuestoes = 3;
@@ -11,29 +12,15 @@ export default function Quiz(tipoNacoes) {
   const [randomCountryName, setRandomCountryName] = useState("");
   const [resultado, setResultado] = useState("");
   const [dgDataFiltered, setDgDataFiltered] = useState([]);
-  const [proximo, setProximo] = useState(0);
-  const [clicou, setClicou] = useState(false);
+  const [endGame, setEndGame] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [contagem, setContagem] = useState(1);
   const [acertos, setAcertos] = useState(0);
   const [erros, setErros] = useState(0);
   const [pulos, setPulos] = useState(0);
   const [desabJump, setDesabJump] = useState(false);
-  const [desabNext, setDesabNext] = useState(false);
 
-  useEffect(() => {
-    if (pulos === 3) {
-      setDesabJump(true);
-      setPulos(3);
-    }
-  }, [pulos]);
-
-  useEffect(() => {
-    if (proximo === maxQuestoes - 1) {
-      setDesabNext(true);
-    }
-  }, [proximo]);
-
+  /* MOSTRAR DADOS ====================================================================================================================================== */
   useEffect(() => {
     const dgFiltered = dgData
       .filter((item) => {
@@ -84,7 +71,7 @@ export default function Quiz(tipoNacoes) {
 
       setRandomItem(randomItems);
     }
-  }, [dgDataFiltered, proximo, pulos]);
+  }, [dgDataFiltered, contagem, pulos]);
 
   useEffect(() => {
     if (randomItem && randomItem.length > 0) {
@@ -93,62 +80,47 @@ export default function Quiz(tipoNacoes) {
     }
   }, [randomItem]);
 
-  function compararNomeImpressoClicado(e) {
-    const divResultado = document.getElementById("resultado-escolha");
+  /* AÇÕES DIVERSAS ====================================================================================================================================== */
 
-    if (!clicou) {
-      if (randomCountryName === e.target.alt) {
-        divResultado.classList.remove("resultado-errado");
-        divResultado.classList.add("resultado-correto");
-        setResultado(
-          <span>
-            {<BiSolidCheckCircle className="icone" />} <br /> CORRETO!
-          </span>
-        );
-
-        setAcertos(acertos + 1);
-      } else {
-        divResultado.classList.remove("resultado-correto");
-        divResultado.classList.add("resultado-errado");
-        setResultado(
-          <span>
-            {<TiWarning className="icone" />} <br /> {`${e.target.alt}`}
-          </span>
-        );
-        setErros(erros + 1);
-      }
-    }
-    setClicou(true);
-  }
-
-  function proximoQuiz() {
-    if (clicou) {
-      const divResultado = document.getElementById("resultado-escolha");
-      divResultado.classList.remove("resultado-correto");
-      divResultado.classList.remove("resultado-errado");
-      setResultado("");
+  useEffect(() => {
+    if (contagem < maxQuestoes && (erros > 0 || acertos > 0))
       setContagem(contagem + 1);
-      setProximo(proximo + 1);
-      setClicou(false);
-    } else {
-      const msg = document.getElementById("mensagem-alerta");
-      msg.classList.remove("hide-class");
-      setMensagem(
-        <span>
-          {<TiWarning className="icone" />} <br /> Por favor, é preciso escolher
-          uma opção!
-        </span>
-      );
-      setTimeout(() => {
-        msg.classList.add("hide-class");
-      }, 2000);
+
+    if (erros + acertos === maxQuestoes) {
+      setEndGame(true);
+      resultadoFinal();
     }
+  }, [erros, acertos]);
+
+  useEffect(() => {
+    if (pulos === 3) {
+      setDesabJump(true);
+    }
+  }, [pulos]);
+
+  /* RESETAR QUIZ */
+
+  function resetGameQuiz() {
+    setEndGame(false);
+    setMensagem("");
+    setContagem(1);
+    setAcertos(0);
+    setErros(0);
+    setPulos(0);
+    setDesabJump(false);
   }
+
+  /* PULAR QUIZ */
 
   function pularQuiz() {
     if (pulos === 2) {
       const msg = document.getElementById("mensagem-alerta");
+      msg.classList.remove("resultado-correto");
+      msg.classList.remove("resultado-errado");
+      msg.classList.remove("mensagem-resultado");
+      msg.classList.add("alerta-de-mensagem");
       msg.classList.remove("hide-class");
+
       setMensagem(
         <span>
           {<TiWarning className="icone" />} <br /> A partir de agora não é mais
@@ -162,20 +134,128 @@ export default function Quiz(tipoNacoes) {
 
     if (pulos < 3) {
       setPulos(pulos + 1);
-      setClicou(false);
     }
   }
 
-  function endGameQuiz() {
-    setProximo(0);
-    setClicou(false);
-    setMensagem("");
-    setContagem(1);
-    setAcertos(0);
-    setErros(0);
-    setPulos(0);
-    setDesabJump(false);
-    setDesabNext(false);
+  /* AÇÃO AO CLICAR NA BANDERIA ========================================================================================================================== */
+
+  function compararNomeImpressoClicado(e) {
+    if (!endGame) {
+      if (randomCountryName === e.target.alt) {
+        const msg = document.getElementById("mensagem-alerta");
+        msg.classList.remove("hide-class");
+        msg.classList.remove("resultado-errado");
+        msg.classList.remove("alerta-de-mensagem");
+        msg.classList.remove("mensagem-resultado");
+        msg.classList.add("resultado-correto");
+        setMensagem(
+          <span>
+            {<BiSolidCheckCircle className="icone" />} <br /> CORRETO!
+          </span>
+        );
+
+        setTimeout(() => {
+          msg.classList.add("hide-class");
+        }, 2000);
+
+        setAcertos(acertos + 1);
+      } else {
+        const msg = document.getElementById("mensagem-alerta");
+        msg.classList.remove("hide-class");
+        msg.classList.remove("resultado-correto");
+        msg.classList.remove("alerta-de-mensagem");
+        msg.classList.remove("mensagem-resultado");
+        msg.classList.add("resultado-errado");
+        setMensagem(
+          <span>
+            {<TiWarning className="icone" />} <br /> {`${e.target.alt}`}
+          </span>
+        );
+        setTimeout(() => {
+          msg.classList.add("hide-class");
+        }, 2000);
+
+        setErros(erros + 1);
+      }
+    }
+
+    if (contagem === maxQuestoes) setDesabJump(true);
+  }
+
+  /* RESULTADO FINAL ==================================================================================================================================== */
+
+  function resultadoFinal() {
+    const percentual = ((acertos - pulos * 0.5) / maxQuestoes) * 100;
+    let msgResutaldo = "";
+
+    /*
+    < 20%             => Humm, precisa aprender um pouco mais sobre bandeiras!
+    entre 21 e 40%    => Pode melhorar!
+    entre 41 e 60%    => Você conhece umpouco sobre bandeiras, hein?
+    entre 61 e 80%    => Uau! Impressionante!
+    entre 81 e 90%    => Quase temos um vexilólogo aqui!
+    > 90%             => Parabéns! Temos um Atlas ambulante aqui!
+  */
+
+    if (percentual < 20) {
+      msgResutaldo = (
+        <span>
+          Aproveitamento: {percentual.toFixed(1)}% <br />
+          Precisa aprender um pouco mais sobre bandeiras!
+        </span>
+      );
+    } else if (percentual > 20 && percentual <= 40) {
+      msgResutaldo = (
+        <span>
+          Aproveitamento: {percentual.toFixed(1)}% <br />
+          Pode melhorar!
+        </span>
+      );
+    } else if (percentual > 40 && percentual <= 60) {
+      msgResutaldo = (
+        <span>
+          Aproveitamento: {percentual.toFixed(1)}% <br />
+          Você conhece umpouco sobre bandeiras, hein?
+        </span>
+      );
+    } else if (percentual > 60 && percentual <= 80) {
+      msgResutaldo = (
+        <span>
+          Aproveitamento: {percentual.toFixed(1)}% <br />
+          Uau! Realmente, impressionante!
+        </span>
+      );
+    } else if (percentual > 80 && percentual <= 90) {
+      msgResutaldo = (
+        <span>
+          Aproveitamento: {percentual.toFixed(1)}% <br />
+          Quase temos um vexilólogo aqui!
+        </span>
+      );
+    } else {
+      msgResutaldo = (
+        <span>
+          Aproveitamento: {percentual.toFixed(0)}% <br />
+          Parabéns! Temos um Atlas ambulante aqui!
+        </span>
+      );
+    }
+
+    const msg = document.getElementById("mensagem-alerta");
+    msg.classList.remove("resultado-correto");
+    msg.classList.remove("resultado-errado");
+    msg.classList.remove("alerta-de-mensagem");
+    msg.classList.add("mensagem-resultado");
+    msg.classList.remove("hide-class");
+
+    setMensagem(
+      <span>
+        {<TiWarning className="icone" />} <br /> {msgResutaldo}
+      </span>
+    );
+    setTimeout(() => {
+      msg.classList.add("hide-class");
+    }, 10000);
   }
 
   return (
@@ -200,18 +280,10 @@ export default function Quiz(tipoNacoes) {
             </div>
           ))}
       </div>
-      <div id="resultado-escolha">{resultado}</div>
       <div className="mensagem-alerta hide-class" id="mensagem-alerta">
         {mensagem}
       </div>
-      <div className="botao-proximo">
-        <button
-          className="next-button"
-          disabled={desabNext}
-          onClick={proximoQuiz}
-        >
-          Próximo
-        </button>
+      <div className="botoes">
         <button
           className="jump-button"
           disabled={desabJump}
@@ -219,14 +291,26 @@ export default function Quiz(tipoNacoes) {
         >
           Pular
         </button>
-        <button className="stop-button" onClick={endGameQuiz}>
-          Finalizar
+        <button className="reset-button" onClick={resetGameQuiz}>
+          Reiniciar
         </button>
       </div>
 
-      <div className="erros-acertos">Acertos: {acertos}</div>
-      <div className="erros-acertos">Erros: {erros}</div>
-      <div className="erros-acertos">Pulos: {pulos}</div>
+      <div className="painel-pontuacao">
+        <div className="pontuacao">Pontuação</div>
+        <div className="icone-acertou">
+          <MdCheckCircle />
+        </div>
+        <div>{acertos}</div>
+        <div className="icone-errou">
+          <MdCancel />
+        </div>
+        <div>{erros}</div>
+        <div className="icone-pulou">
+          <MdRedo />
+        </div>
+        <div>{pulos}</div>
+      </div>
     </div>
   );
 }
