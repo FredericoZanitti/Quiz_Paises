@@ -9,8 +9,10 @@ import { MdCancel, MdCheckCircle, MdRedo } from "react-icons/md";
 
 export default function Quiz(tipoNacoes) {
   const [maxQuestoes, setmaxQuestoes] = useState(20);
+  const [paisesJaUtilizados, setPaisesJaUtilizados] = useState([]);
   const [dgData, setDgData] = useState([]);
   const [randomItem, setRandomItem] = useState(null);
+  const [itemUnico, setItemUnico] = useState(-1);
   const [randomCountryName, setRandomCountryName] = useState("");
   const [dgDataFiltered, setDgDataFiltered] = useState([]);
   const [endGame, setEndGame] = useState(false);
@@ -24,6 +26,9 @@ export default function Quiz(tipoNacoes) {
   /* MOSTRAR DADOS ====================================================================================================================================== */
   useEffect(() => {
     const dgFiltered = dgData
+      .filter((item) => {
+        return !paisesJaUtilizados.includes(item.translations.por.common);
+      })
       .filter((item) => {
         switch (tipoNacoes.tipoNacoes) {
           case "s":
@@ -58,8 +63,31 @@ export default function Quiz(tipoNacoes) {
   useEffect(() => {
     const singleIndex = [];
     const randomItems = [];
+    const indicesPaisesUtilizados = [];
 
     if (dgDataFiltered.length > 0) {
+      paisesJaUtilizados.forEach((item) => {
+        indicesPaisesUtilizados.push(
+          dgDataFiltered.findIndex(
+            (pais) => pais.translations.por.common === item
+          )
+        );
+      });
+
+      let indiceUnico = Math.floor(Math.random() * dgDataFiltered.length);
+      let count = 0;
+      while (indicesPaisesUtilizados.includes(indiceUnico)) {
+        indiceUnico = Math.floor(Math.random() * dgDataFiltered.length);
+        count++;
+
+        if (count === dgDataFiltered.length) {
+          break;
+        }
+      }
+
+      singleIndex.push(indiceUnico);
+      setItemUnico(indiceUnico);
+
       while (singleIndex.length < 4) {
         const randomIndex = Math.floor(Math.random() * dgDataFiltered.length);
         if (!singleIndex.includes(randomIndex)) {
@@ -71,14 +99,13 @@ export default function Quiz(tipoNacoes) {
         randomItems.push(dgDataFiltered[i]);
       });
 
-      setRandomItem(randomItems);
+      setRandomItem(embaralharArray(randomItems));
     }
   }, [dgDataFiltered, contagem, pulos]);
 
   useEffect(() => {
     if (randomItem && randomItem.length > 0) {
-      const randomIndex = Math.floor(Math.random() * randomItem.length);
-      setRandomCountryName(randomItem[randomIndex].translations.por.common);
+      setRandomCountryName(dgDataFiltered[itemUnico].translations.por.common);
     }
   }, [randomItem]);
 
@@ -128,6 +155,7 @@ export default function Quiz(tipoNacoes) {
     setErros(0);
     setPulos(0);
     setDesabJump(false);
+    setPaisesJaUtilizados([]);
 
     const msg = document.getElementById("mensagem-alerta");
     msg.classList.add("hide-class");
@@ -160,6 +188,7 @@ export default function Quiz(tipoNacoes) {
   /* AÇÃO AO CLICAR NA BANDERIA ========================================================================================================================== */
 
   function compararNomeImpressoClicado(e) {
+    setPaisesJaUtilizados([...paisesJaUtilizados, randomCountryName]);
     const msg = document.getElementById("mensagem-alerta");
     msg.classList.remove("hide-class");
     msg.classList.remove("resultado-errado");
@@ -263,6 +292,16 @@ export default function Quiz(tipoNacoes) {
     msg.classList.remove("hide-class");
 
     setMensagem(<span>{msgResutaldo}</span>);
+  }
+
+  /* FUNÇÕES DIVERSAS ================================================================================================================================= */
+
+  function embaralharArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   return (
