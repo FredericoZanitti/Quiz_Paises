@@ -143,7 +143,7 @@ export default function Quiz(tipoNacoes) {
 
   useEffect(() => {
     resetGameQuiz();
-  }, [maxQuestoes]);
+  }, [maxQuestoes, tipoNacoes]);
 
   /* RESETAR QUIZ */
 
@@ -221,8 +221,10 @@ export default function Quiz(tipoNacoes) {
   /* RESULTADO FINAL ==================================================================================================================================== */
 
   function resultadoFinal() {
-    const percentual =
+    let percentual =
       ((acertos - pulos * 0.2) / Number.parseInt(maxQuestoes)) * 100;
+
+    if (percentual < 0) percentual = 0;
     let msgResutaldo = "";
 
     /*
