@@ -18,6 +18,10 @@ export default function EscolherQtdeRodadas({ onChangeQuantidade }) {
         defaultValue={20}
         onChange={handleChange}
       />
+      <br />
+      <span id="inf-maximo" className="visibilidade">
+        Máximo de x rodadas
+      </span>
     </div>
   );
 }

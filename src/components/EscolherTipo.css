@@ -73,11 +73,17 @@ label span {
   top: 0;
   text-align: left;
   color: #282c34;
-  margin-bottom: 0.7em;
 }
 
 .escolher-qtde-rodadas {
   display: block;
   text-align: left;
   margin-left: 0.6em;
+}
+
+#inf-maximo {
+  font-size: 0.4em;
+  font-family: "Roboto", sans-serif;
+  color: red;
+  margin: 0;
 }
