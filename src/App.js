@@ -35,6 +35,13 @@ function App() {
     cobrirTela.classList.toggle("hide-show-bar");
   }
 
+  function clickCobreTela() {
+    const settingIcon = document.getElementById("setting-bar");
+    settingIcon.classList.add("hide-show-bar");
+    const cobrirTela = document.getElementById("cobre-tela");
+    cobrirTela.classList.add("hide-show-bar");
+  }
+
   return (
     <div className="App">
       <IoMdSettings className="settings" onClick={clickSettings} />
@@ -45,7 +52,11 @@ function App() {
           <EscolherQtdeRodadas onChangeQuantidade={handleQtdeRodadas} />
         </div>
       </div>
-      <div className="hide-show-bar cobre-tela" id="cobre-tela"></div>
+      <div
+        className="hide-show-bar cobre-tela"
+        id="cobre-tela"
+        onClick={clickCobreTela}
+      ></div>
       <div className="titulo-quiz">QUIZ PAÍSES</div>
       <hr />
       <div className="tela-quiz">

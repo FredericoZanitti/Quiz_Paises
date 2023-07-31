@@ -100,6 +100,21 @@ export default function Quiz(tipoNacoes) {
       });
 
       setRandomItem(embaralharArray(randomItems));
+
+      /*
+        mostrar qtde de rodadas de acordo com o filtro selecionado
+        respeitando o máximo de países filtrado
+      */
+      const rodadas = document.getElementById("search");
+      if (rodadas.value > dgDataFiltered.length) {
+        rodadas.value = dgDataFiltered.length;
+        const informacaoRod = document.getElementById("inf-maximo");
+        informacaoRod.innerText = `Possível um máximo de ${dgDataFiltered.length} rodadas`;
+        informacaoRod.classList.remove("visibilidade");
+      } else {
+        const informacaoRod = document.getElementById("inf-maximo");
+        informacaoRod.classList.add("visibilidade");
+      }
     }
   }, [dgDataFiltered, contagem, pulos]);
 
