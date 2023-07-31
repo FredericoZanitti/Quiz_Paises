@@ -135,6 +135,7 @@ export default function Quiz(tipoNacoes) {
     if (erros + acertos === Number.parseInt(maxQuestoes)) {
       setTimeout(() => {
         msg.classList.add("hide-class");
+        resetGameQuiz();
       }, 10000);
 
       setEndGame(true);
