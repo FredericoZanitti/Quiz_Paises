@@ -310,7 +310,7 @@ export default function Quiz(tipoNacoes) {
     <div>
       <BuscaPaises onChange={setDgData} />
 
-      <div className="questao-numero">{`Questão ${contagem} de ${maxQuestoes}`}</div>
+      <div className="questao-numero">{`Rodada ${contagem} de ${maxQuestoes}`}</div>
 
       <div className="nome-pais-aleatorio">
         {`${randomCountryName.toUpperCase()}`}
