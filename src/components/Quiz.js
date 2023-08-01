@@ -108,6 +108,7 @@ export default function Quiz(tipoNacoes) {
       const rodadas = document.getElementById("search");
       if (rodadas.value > dgDataFiltered.length) {
         rodadas.value = dgDataFiltered.length;
+        setmaxQuestoes(dgDataFiltered.length);
         const informacaoRod = document.getElementById("inf-maximo");
         informacaoRod.innerText = `Possível um máximo de ${dgDataFiltered.length} rodadas`;
         informacaoRod.classList.remove("visibilidade");
