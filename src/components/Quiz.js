@@ -1,4 +1,5 @@
 import BuscaPaises from "./BuscaPaises";
+import Timer from "./Timer";
 import { useState, useEffect } from "react";
 import "./Quiz.css";
 import { BiSolidCheckCircle } from "react-icons/bi";
@@ -22,6 +23,9 @@ export default function Quiz(tipoNacoes) {
   const [erros, setErros] = useState(0);
   const [pulos, setPulos] = useState(0);
   const [desabJump, setDesabJump] = useState(false);
+  const [tempoRodada, setTempoRodada] = useState(20);
+  const [tempoEsgotado, setTempoEsgotado] = useState(false);
+  const tempoRegressivo = 20;
 
   /* MOSTRAR DADOS ====================================================================================================================================== */
   useEffect(() => {
@@ -127,6 +131,34 @@ export default function Quiz(tipoNacoes) {
 
   /* AÇÕES DIVERSAS ====================================================================================================================================== */
 
+  /* CONTROLAR O TEMPO REGRESSIVO */
+  const handleTimerComplete = () => {
+    setTempoEsgotado(true);
+  };
+
+  useEffect(() => {
+    if (tempoEsgotado) {
+      const msg = document.getElementById("mensagem-alerta");
+      msg.classList.remove("hide-class");
+      msg.classList.remove("resultado-errado");
+      msg.classList.remove("alerta-de-mensagem");
+      msg.classList.remove("mensagem-resultado");
+
+      if (!endGame) {
+        msg.classList.add("resultado-errado");
+        setMensagem(
+          <span>
+            {<TiWarning className="icone" />} <br /> {"Tempo esgotado!"}
+          </span>
+        );
+        setErros(erros + 1);
+      }
+      if (contagem === Number.parseInt(maxQuestoes)) setDesabJump(true);
+      setTempoRodada(tempoRegressivo + 2);
+      setTempoEsgotado(false);
+    }
+  }, [tempoEsgotado]);
+
   useEffect(() => {
     const msg = document.getElementById("mensagem-alerta");
 
@@ -162,6 +194,10 @@ export default function Quiz(tipoNacoes) {
     resetGameQuiz();
   }, [maxQuestoes, tipoNacoes]);
 
+  useEffect(() => {
+    setTempoRodada(tempoRegressivo);
+  }, [tempoRodada]);
+
   /* RESETAR QUIZ */
 
   function resetGameQuiz() {
@@ -173,9 +209,13 @@ export default function Quiz(tipoNacoes) {
     setPulos(0);
     setDesabJump(false);
     setPaisesJaUtilizados([]);
+    setTempoRodada(tempoRegressivo + 1);
+    setTempoEsgotado(false);
 
     const msg = document.getElementById("mensagem-alerta");
     msg.classList.add("hide-class");
+    const cronometro = document.getElementById("tempo-regressivo");
+    cronometro.classList.remove("hide-class");
   }
 
   /* PULAR QUIZ */
@@ -200,6 +240,7 @@ export default function Quiz(tipoNacoes) {
     if (pulos < 3) {
       setPulos(pulos + 1);
     }
+    setTempoRodada(tempoRegressivo + 1);
   }
 
   /* AÇÃO AO CLICAR NA BANDERIA ========================================================================================================================== */
@@ -232,6 +273,10 @@ export default function Quiz(tipoNacoes) {
         setErros(erros + 1);
       }
     }
+
+    setTempoRodada(tempoRegressivo + 1);
+    setTempoEsgotado(false);
+
     if (contagem === Number.parseInt(maxQuestoes)) setDesabJump(true);
   }
 
@@ -310,6 +355,9 @@ export default function Quiz(tipoNacoes) {
     msg.classList.add("mensagem-resultado");
     msg.classList.remove("hide-class");
 
+    const cronometro = document.getElementById("tempo-regressivo");
+    cronometro.classList.add("hide-class");
+
     setMensagem(<span>{msgResutaldo}</span>);
   }
 
@@ -378,6 +426,10 @@ export default function Quiz(tipoNacoes) {
           </div>
           <div>{pulos}</div>
         </div>
+      </div>
+
+      <div id="tempo-regressivo">
+        <Timer tempo={tempoRodada} onTimerComplete={handleTimerComplete} />
       </div>
     </div>
   );

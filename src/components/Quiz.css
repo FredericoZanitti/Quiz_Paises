@@ -269,3 +269,15 @@
     top: 60%; /* Posiciona o elemento a 50% da altura da tela */
   }
 }
+
+#tempo-regressivo {
+  background-color: seagreen;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.6em;
+  font-weight: bold;
+  color: white;
+  margin: auto;
+
+  width: 5em;
+  border-radius: 5em;
+}
