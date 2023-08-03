@@ -236,7 +236,7 @@
 /* Adicione regras de mídia para ajustar o layout em tamanhos de tela menores */
 @media screen and (max-width: 1040px) {
   .botoes {
-    margin-bottom: 3em;
+    margin-bottom: 1em;
   }
 
   .painel-pontuacao-geral {

@@ -410,6 +410,10 @@ export default function Quiz(tipoNacoes) {
         </button>
       </div>
 
+      <div id="tempo-regressivo">
+        <Timer tempo={tempoRodada} onTimerComplete={handleTimerComplete} />
+      </div>
+
       <div className="painel-pontuacao-geral">
         <div className="painel-pontuacao">
           <div className="pontuacao">Pontuação</div>
@@ -426,10 +430,6 @@ export default function Quiz(tipoNacoes) {
           </div>
           <div>{pulos}</div>
         </div>
-      </div>
-
-      <div id="tempo-regressivo">
-        <Timer tempo={tempoRodada} onTimerComplete={handleTimerComplete} />
       </div>
     </div>
   );
