@@ -7,3 +7,20 @@ Há a possibilidade de escolher as configurações para que as banderias sejam a
 
 https://restcountries.com
 
+## Telas do jogo
+
+![Tela Inicial do Quiz](https://zanitti.com.br/imagens/Quiz_tela1.jpg)
+
+![Tela de Configuração](https://zanitti.com.br/imagens/Quiz_settings.jpg)
+
+![Utilização dos 3 pulos](https://zanitti.com.br/imagens/Quiz_pulo.jpg)
+
+![Utilização dos 3 pulos](https://zanitti.com.br/imagens/Quiz_pulo.jpg)
+
+![Acertando a resposta](https://zanitti.com.br/imagens/Quiz_acerto.jpg)
+
+![Errando a resposta](https://zanitti.com.br/imagens/Quiz_erro.jpg)
+
+![Esgotando o tempo](https://zanitti.com.br/imagens/Quiz_tempoesgotado.jpg)
+
+![Mensagem Final com o Resultado](https://zanitti.com.br/imagens/Quiz_resultadofinal.jpg)
