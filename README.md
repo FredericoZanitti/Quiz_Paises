@@ -29,3 +29,6 @@ https://restcountries.com
 
 ![Mensagem Final com o Resultado](https://zanitti.com.br/imagens/Quiz_resultadofinal.jpg)
 ### Mensagem final com o resultado percentual
+
+![Versao em telemovel](https://zanitti.com.br/imagens/Quiz_versaotelemovel.jpg)
+### Disposição na versão móvel
