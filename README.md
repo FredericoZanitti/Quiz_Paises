@@ -10,16 +10,22 @@ https://restcountries.com
 ## Telas do jogo
 
 ![Tela Inicial do Quiz](https://zanitti.com.br/imagens/Quiz_tela1.jpg)
-Tela inicial
+#Tela inicial
+
 ![Tela de Configuração](https://zanitti.com.br/imagens/Quiz_settings.jpg)
-Tela de configuração
+#Tela de configuração
+
 ![Utilização dos 3 pulos](https://zanitti.com.br/imagens/Quiz_pulo.jpg)
-Utilização dos pulos
+#Utilização dos pulos
+
 ![Acertando a resposta](https://zanitti.com.br/imagens/Quiz_acerto.jpg)
-Mensagem ao acertar a resposta
+#Mensagem ao acertar a resposta
+
 ![Errando a resposta](https://zanitti.com.br/imagens/Quiz_erro.jpg)
-Mensagem ao errar a resposta
+#Mensagem ao errar a resposta
+
 ![Esgotando o tempo](https://zanitti.com.br/imagens/Quiz_tempoesgotado.jpg)
-Mensagem se deixar o cronômetro zerar
+#Mensagem se deixar o cronômetro zerar
+
 ![Mensagem Final com o Resultado](https://zanitti.com.br/imagens/Quiz_resultadofinal.jpg)
-Mensagem final com o resultado percentual
+#Mensagem final com o resultado percentual
