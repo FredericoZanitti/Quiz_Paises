@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export default function infoPaises(regiao) {
-  const fields = "name,region,capital,population,flags";
+  const fields =
+    "name,translations,region,capital,population,flags";
 
   const url =
     regiao === "Todas"
